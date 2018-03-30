@@ -23,50 +23,62 @@ The threads use the counter to add and subtract values.
 | AtomicLong for total    |  10,000,000        | 0.378776        |
 
 ## 1. Using unsynchronized counter object
-answer the questions (1.1 - 1.3)
-	1.1 Yes, The total should be zero however the total is not always the same.
-	1.2 Count 1 to 1,000,000 in 0.014595 sec
-		Count 1 to 1,000,000 in 0.012759 sec
-		Count 1 to 1,000,000 in 0.012528 sec
-		Average = 0.01327733
-	1.3 The counter total sometimes not zero because the counter sometimes will run two threads at the same time or run in each thread first. This will return to the counter and the total may not be zero.
+1.1 Yes, The total should be zero however the total is not always the same.
+
+1.2 
+Count 1 to 1,000,000 in 0.014595 sec
+
+Count 1 to 1,000,000 in 0.012759 sec
+     
+Count 1 to 1,000,000 in 0.012528 sec
+	
+Average = 0.01327733
+
+1.3 The counter total sometimes not zero because the counter sometimes will run two threads at the same time or run in each thread first. This will return to the counter and the total may not be zero.
 
 ## 2. Implications for Multi-threaded Applications
 
 How might this affect real applications? 
-	- the banking application will affect on transference of money. if you deposit and another user withdraw the money at the same time, it will use the same value in the account. In fact, it should run in each activity first.   
+
+- the banking application will affect on transference of money. if you deposit and another user withdraw the money at the same time, it will use the same value in the account. In fact, it should run in each activity first.   
 
 ## 3. Counter with ReentrantLock
 
-answer questions 3.1 - 3.4
-	3.1 Yes, the total always zero.
-		1-1,000,000 average 0.092115 sec
-	3.2 The results are different from problem 1 because the counter with ReentrantLock will select to lock the thread and total always be zero. 
-	3.3  The counter with ReentrantLock will run one thread first and lock in another thread when the first thread finish, then it will run in another thread.
-	3.4 The code must be run in the finally, so this case always get unlock when finish the thread.
+
+3.1 Yes, the total always zero.
+
+1-1,000,000 average 0.092115 sec
+
+3.2 The results are different from problem 1 because the counter with ReentrantLock will select to lock the thread and total always be zero. 
+	
+3.3  The counter with ReentrantLock will run one thread first and lock in another thread when the first thread finish, then it will run in another thread.
+	
+3.4 The code must be run in the finally, so this case always get unlock when finish the thread.
 		
 
 ## 4. Counter with synchronized method
 
-answer question 4
-	4.1 Yes, the total always zero.
-		1 to 1,000,000 average 0.082564 sec
-	4.2 The results are different from problem 1 because synchronous will lock all the thread and total always be zero.
-	4.3 "synchronoized" means the method that can not call in the same time. We use it in this program because synchronous will run only one thread and lock other threads, so it will not run the method in the same time.
+4.1 Yes, the total always zero.
+
+1 to 1,000,000 average 0.082564 sec
+
+4.2 The results are different from problem 1 because synchronous will lock all the thread and total always be zero.
+
+4.3 "synchronoized" means the method that can not call in the same time. We use it in this program because synchronous will run only one thread and lock other threads, so it will not run the method in the same time.
 
 ## 5. Counter with AtomicLong
 
-answer question 5
-	5.1 Using AtometicLong, the thread will collect the data first. Next, it will calculate the value and then compare the data that we get with the data from the source  whether it is matches or not if it is, then it is ok. If it is not, then calculate in new value. So AtometicLong are not interrupt in other threads.
-	5.2 AtomicLong will run fast when it is not complicate function.
+5.1 Using AtometicLong, the thread will collect the data first. Next, it will calculate the value and then compare the data that we get with the data from the source  whether it is matches or not if it is, then it is ok. If it is not, then calculate in new value. So AtometicLong are not interrupt in other threads.
+
+5.2 AtomicLong will run fast when it is not complicate function.
 	 
 	
 
 ## 6. Analysis of Results
 
-answer question 6
-	6.1 AtomCounter is the fastest and ReentrantLock is the slowest.
-	6.2 ReentrantLock because we can select to lock in any threads. For example, if there are many threads to run the program, we just lock only the thread that make affect to the program. So it will help the program run faster.
+6.1 AtomCounter is the fastest and ReentrantLock is the slowest.
+
+6.2 ReentrantLock because we can select to lock in any threads. For example, if there are many threads to run the program, we just lock only the thread that make affect to the program. So it will help the program run faster.
 	
 
 ## 7. Using Many Threads (optional)
